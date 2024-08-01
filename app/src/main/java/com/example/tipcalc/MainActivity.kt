@@ -1,9 +1,11 @@
 package com.example.tipcalc
 
 import android.os.Bundle
+import android.util.Size
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,9 +14,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,63 +34,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TipCalcTheme {
-                var amount by remember { mutableStateOf("") }
-                var splitValue by remember { mutableStateOf(1) }
-                var tipPercentage by remember { mutableStateOf(0f) }
 
-                Column {
+                    Column {
+                        var amount by remember { mutableStateOf("") }
+                        var splitValue by remember { mutableStateOf(1) }
+                        var tipPercentage by remember { mutableStateOf(0f) }
 
-                    Calculation(
-                        amount = amount,
-                        amountChanged = { newValue -> amount = newValue },
-                        splitValue = splitValue,
-                        splitChanged = { newSplit -> splitValue = newSplit },
-                        tipPercentage = tipPercentage,
-                        tipChanged = { newTip -> tipPercentage = newTip }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun Calculator(amountPerPerson: Float) {
-    Card(
-        shape = RectangleShape,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-            .padding(top = 40.dp)
-    ) {
-        Column {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White,
-                )
-            ) {
-                Text(
-                    text = "Total per person",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 20.sp,
-                    color = Color.Black
-                )
-
-                Text(
-                    text = "₹ $amountPerPerson",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.displayLarge,
-                    fontSize = 55.sp,
-                    color = Color.Black
-                )
+                        Calculation(
+                            amount = amount,
+                            amountChanged = { newValue -> amount = newValue },
+                            splitValue = splitValue,
+                            splitChanged = { newSplit -> splitValue = newSplit },
+                            tipPercentage = tipPercentage,
+                            tipChanged = { newTip -> tipPercentage = newTip }
+                        )
+                    }
             }
         }
     }
@@ -118,7 +81,7 @@ fun Calculation(
             .fillMaxWidth()
             .padding(5.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,)
+            containerColor = Color.White)
     ) {
 
         Column(
@@ -216,6 +179,47 @@ fun Calculation(
     }
 }
 
+@Composable
+fun Calculator(amountPerPerson: Float) {
+    Card(
+        shape = RectangleShape,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .padding(top = 40.dp)
+    ) {
+        Column {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                )
+            ) {
+                Text(
+                    text = "Total per person",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 20.sp,
+                    color = Color.Black
+                )
+
+                Text(
+                    text = "₹ $amountPerPerson",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    style = MaterialTheme.typography.displayLarge,
+                    fontSize = 55.sp,
+                    color = Color.Black
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun CustomButton(
