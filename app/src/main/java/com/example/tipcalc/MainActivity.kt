@@ -77,7 +77,7 @@ fun Calculator(amountPerPerson: Float) {
                 )
 
                 Text(
-                    text = "$ $amountPerPerson",
+                    text = "₹ $amountPerPerson",
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -187,7 +187,7 @@ fun Calculation(
                     fontSize = 20.sp
                 )
 
-                Text(text = "$${(amount.toFloatOrNull() ?: 0f) * (tipPercentage / 100)}")
+                Text(text = "₹ ${(amount.toFloatOrNull() ?: 0f) * (tipPercentage / 100)}")
             }
 
             Column(
