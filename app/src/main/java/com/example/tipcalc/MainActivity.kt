@@ -1,7 +1,7 @@
 package com.example.tipcalc
 
 import android.os.Bundle
-import android.util.Size
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -34,11 +34,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TipCalcTheme {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .size(2.dp)) {
 
                     Column {
                         var amount by remember { mutableStateOf("") }
-                        var splitValue by remember { mutableStateOf(1) }
-                        var tipPercentage by remember { mutableStateOf(0f) }
+                        var splitValue by remember { mutableIntStateOf(1) }
+                        var tipPercentage by remember { mutableFloatStateOf(0f) }
 
                         Calculation(
                             amount = amount,
@@ -49,6 +52,7 @@ class MainActivity : ComponentActivity() {
                             tipChanged = { newTip -> tipPercentage = newTip }
                         )
                     }
+                }
             }
         }
     }
@@ -64,8 +68,8 @@ fun Calculation(
     tipChanged: (Float) -> Unit
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
-    var totalAmount by remember { mutableStateOf(0f) }
-    var totalPerPerson by remember { mutableStateOf(0f) }
+    var totalAmount by remember { mutableFloatStateOf(0f) }
+    var totalPerPerson by remember { mutableFloatStateOf(0f) }
 
     LaunchedEffect(amount, splitValue, tipPercentage) {
         val amountValue = amount.toFloatOrNull() ?: 0f
@@ -80,6 +84,7 @@ fun Calculation(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White)
     ) {
@@ -186,13 +191,15 @@ fun Calculator(amountPerPerson: Float) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .padding(top = 40.dp)
-    ) {
+            .padding(top = 40.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+
+        ) {
         Column {
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White,
-                )
+                    containerColor = Color.White,),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
             ) {
                 Text(
                     text = "Total per person",
